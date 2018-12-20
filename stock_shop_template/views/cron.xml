@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+
+    <data noupdate="0">
+<!-- 	<record model="ir.cron" id="shop_provision">
+        <field name="name">Generate shop re-provisionning</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="numbercall">-1</field>
+        <field name="model_id" ref='stock.model_stock_picking_template'/>
+        <field name="doall" eval="False"/>
+        <field name="code">model._cron_generate_provision()</field>        
+    </record>
+ -->
+<!-- <data noupdate="0">
+        <record id="ir_cron_generate_prorata_invoice" model="ir.cron">
+            <field name="name">Sale Subscription: Generate Pro-Rata Invoice</field>
+            <field name="model_id" ref="sale_subscription.model_sale_subscription"/>
+            <field name="state">code</field>
+            <field name="code">model.create_prorata_invoice()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="nextcall" eval="(DateTime.now() + relativedelta(day=1, months=1)).strftime('%Y-%m-%d 09:00:00')" />
+        </record>
+    </data>
+ -->
+
+    <!--cron for merging pickings-->
+<!--     <record model="ir.cron" id="merge_picking">
+        <field name="name">Merge Pickings</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="state">code</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref='stock.stock_picking'/>
+        <field name="code">model.merge_pickings()</field>
+    </record>
+ -->
+
+    <record id="email_shop_order" model="mail.template">
+        <field name="name">Shop Order Copy</field>
+        <field name="subject">Votre commande (${object.origin})</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="report_template" ref="stock.action_report_picking"/>
+        <field name="partner_to">${object.location_dest_id.partner_id and object.location_dest_id.partner_id.id or ''}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html">
+                <![CDATA[
+<p>Voici la commande que vous venez de passer
+
+<p>Nous en avons pris bonne note, merci.</p>
+
+]]></field>
+    </record>
+
+    </data>
+</odoo>

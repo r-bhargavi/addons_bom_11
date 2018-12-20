@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+
+        <template id="shop_orders_assets" name="shop_orders assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/stock_shop_template/static/src/js/shop_orders.js"></script>
+                <link rel="stylesheet" href="/stock_shop_template/static/src/css/shop_orders.css"/>
+            </xpath>
+        </template>
+
+        <template id="shop_orders">
+        <t t-call="website.layout">
+        <h1 style="margin-top:50px;">Commandes en attente</h1>
+        <t t-set="day_list" t-value="['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']"/>
+        <div class="list-group shop_order_page">
+            <t t-foreach="pickings" t-as="picking">
+                <div class="picking-complete" t-att-data-picking_id="picking.id">
+                <a href="#" class="list-group-item picking-item"><t t-esc="picking.origin"/><span class="badge badge-warning"><t t-esc="picking.state"/></span></a>
+                <div class="hidden picking-content">
+                    <form class="shop-order-form" t-att-id="picking.id" t-att-data="picking.id">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Produit</th>
+                                    <th>Unité</th>
+                                    <th>Quantité</th>
+                                    <th>Jours de livraison</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <t t-foreach="picking.move_lines.sorted(lambda x : x.product_id.name_template)" t-as="move">
+                                    <tr t-att-data-move_id="move.id">
+                                        <td><b><t t-esc="move.product_id.display_name"/></b></td>
+                                        <td><t t-esc="move.product_uom.name"/></td>
+                                        <td><input type="number"  step="1" class="form-control" t-att-value="move.product_uom_qty" autocomplete="off"/></td>
+                                        <td><t t-esc="move.product_id.x_order_days and '/'.join([day_list[(day_list.index(day.strip()) + 1) % 7] for day in move.product_id.x_order_days.split(';')]) or 'Aucun - avertir Anne !!'"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary">Valider ma commande pour <t t-esc="picking.origin"/></button>
+                    </form>
+                </div>
+                </div>
+            </t>
+        </div>
+        </t>
+        </template>
+    </data>
+</odoo>

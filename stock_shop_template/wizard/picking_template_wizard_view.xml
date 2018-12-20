@@ -1,0 +1,62 @@
+<openerp>
+    <data>
+        <record id="assign_picking_temp_wizard_form" model="ir.ui.view">
+        <field name="name">picking.temp.wizard.form</field>
+        <field name="model">picking.template.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Assign Picking Templates">
+                <notebook>
+                            <page string="Templates">
+                    <field name="pickin_temp_ids">
+                       <tree string="Stock Picking Template">
+                           <field name="name" string="Picking Template"/>
+<!--                            <field name="week_days"/>
+                           <field name="temp_category"/> -->
+
+                        </tree>
+                   </field>
+                   </page>
+                        </notebook>
+                    <footer>
+                        <button name="assign_product" string="Assign" type="object" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+            </form>
+        </field>
+        </record>
+
+        <record id="action_assign_picking_temp_wizard_view" model="ir.actions.act_window">
+        <field name="name">Assign Picking Templates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">picking.template.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="assign_picking_temp_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+<!--         <record id="view_picking_template_wizard_tree" model="ir.ui.view">
+        <field name="name">picking.template.wizard.tree</field>
+        <field name="model">picking.template</field>
+        <field name="priority">4</field>
+        <field name="arch" type="xml">
+            <tree string="Picking Template">
+                <field name="name" string="Picking Template"/>
+                <field name="picking_type"/>
+                <field name="pick_date"/>
+                <field name="assign"/>
+                <field name="wizard_id" invisible="1"/>
+                <field name="pick_temp_id" invisible="1"/>
+            </tree>
+        </field>
+        </record>
+        <record id="action_picking_temp_wizard_view" model="ir.actions.act_window">
+        <field name="name">Assign Picking Templates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">picking.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_picking_template_wizard_tree"/>
+    </record> -->
+    </data>
+</openerp>

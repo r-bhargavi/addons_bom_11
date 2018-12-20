@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- <record model='ir.ui.view' id='mrp_bom_cost_qty_form'>
+            <field name="name">wizard.mrp_bom_cost.form</field>
+            <field name="model">bom_cost_qty.wizard.mrp_bom_cost</field>
+            <field name="arch" type="xml">
+                <form string="Wizard">
+                        <group>
+                            <field name="bom" invisible="True"/>
+                            <field name="qty"/>
+                        </group>
+                    <footer>
+                        <button name="print_report" type="object" default_focus="1"
+                                string="Print report" class="oe_highlight"
+                                 icon="gtk-print"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+         <record id="action_view_mrp_bom_cost" model="ir.actions.act_window">
+            <field name="name">Choose quantity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bom_cost_qty.wizard.mrp_bom_cost</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mrp_bom_cost_qty_form"/>
+            <field name="target">new</field>
+        </record>  -->
+
+        <record id="purchase_order_shop_form_view" model="ir.ui.view">
+            <field name="name">purchase.shop.form.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="price_unit" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+                <field name="price_subtotal" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+                <field name="amount_untaxed" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+                <field name="amount_tax" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+                <field name="amount_total" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="purchase_warehouse_id" invisible="0"/>
+                </field>              
+                <field name="picking_type_id" position="attributes">
+                    <attribute name="domain">[('warehouse_id', '=', purchase_warehouse_id)]</attribute>
+                </field>
+                 <field name="product_id" position="attributes">
+                    <attribute name="domain">[('purchase_ok', '=', True), ('seller_ids.name', 'in', [parent.partner_id]),('purchase_warehouse_variants', '=', parent.purchase_warehouse_id)]</attribute>
+                </field>
+                <field name="partner_id" position="attributes">
+                    <attribute name="domain">[('supplier', '=', True), ('purchase_warehouse_ids', '=', purchase_warehouse_id)]</attribute>
+                </field>
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                         <button name="action_preload_lines" states="draft" string="Preload all lines" type="object"/>
+                         <button name="action_remove_empty_lines" states="draft" string="Remove empty lines" type="object"/>
+                </xpath>
+                <field name="message_ids" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_order_shop_tree_view" model="ir.ui.view">
+            <field name="name">purchase.shop.tree.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="amount_untaxed" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+                <field name="amount_total" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_product_template_only_warehouses_form_view" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <!-- <field name="seller_ids" position="after">
+                    <field name="purchase_warehouse_ids"/>
+                </field> -->
+                <field name="uom_po_id" position="after">
+                    <field name="uom_po_secondary_id"/>
+                </field>
+                <field name="seller_ids" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </field>
+            </field>
+        </record>
+
+    <!--warehouse ids in variants-->
+        <record id="product_variant_warehouses_form_view" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="seller_ids" position="after">
+                    <field name="purchase_warehouse_variants"/>
+                </field>
+            </field>
+        </record>
+    
+        <record id="res_users_warehouses_form_view" model="ir.ui.view">
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="main_warehouse_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="res_partner_warehouses_form_view" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='purchase']" position="inside">
+                    <field name="purchase_warehouse_ids" attrs="{'invisible': [('supplier', '=', False)]}"/>
+               </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,120 @@
+<odoo>
+  <data>
+    <record id="picking_type_search_view_inherit" model="ir.ui.view">
+            <field name="name">picking.type.search</field>
+            <field name="model">stock.picking.type</field>
+            <field name="arch" type="xml">
+                <search string="Picking Type">
+                    
+                    <filter string="My Warehouse" name="filter_my_warehouse" domain="[('warehouse_id.user_ids','=',uid)]"/>
+                </search>
+            </field>
+        </record>
+    <record id="view_picking_search_inherit_cron" model="ir.ui.view">
+            <field name="name">view.picking.search.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <search string="Picking Lists">
+                    <filter string="Today's Scheduled Date" name="filter_min_date" domain="[('min_date','=', time.strftime('%%Y-%%m-%%d'))]"  help="Today's Scheduled Date"/>
+                    <filter string="Picking Created From Cron Picking" name="filter_temp_create_pick" domain="[('temp_create_pick','=',True)]"/>
+                </search>
+            </field>
+    </record>
+    
+    <!-- <record id="form_view_picking_inherit" model="ir.ui.view">
+            <field name="name">form.view.picking.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="temp_create_pick" invisible='1'/>                
+                    <field name="check_login_user_wh"  invisible='1'/>                
+                </xpath>
+                <xpath expr="//button[@name='do_new_transfer']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('check_login_user_wh', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='do_new_transfer']" position="after">
+                    <button name="action_get_last_qties" string="Utiliser derniers chiffres" type="object"/>
+                </xpath>
+
+            </field>
+    </record>
+     -->
+    <record id="view_move_picking_tree_inherit" model="ir.ui.view">
+            <field name="name">view.move.picking.tree.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="temp_create_move" invisible='1'/>  
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('temp_create_move', '=', True)]}</attribute>
+                </xpath>
+            </field>
+    </record>
+    
+    <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+        <field name="context">{
+                    'contact_display': 'partner_address','search_default_filter_min_date': time.strftime('%%Y-%%m-%%d')
+            }
+            </field>
+    </record>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="stock_shop_template.list">
+      <field name="name">stock_shop_template list</field>
+      <field name="model">stock_shop_template.stock_shop_template</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="stock_shop_template.action_window">
+      <field name="name">stock_shop_template window</field>
+      <field name="res_model">stock_shop_template.stock_shop_template</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="stock_shop_template.action_server">
+      <field name="name">stock_shop_template server</field>
+      <field name="model_id" ref="model_stock_shop_template_stock_shop_template"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="stock_shop_template" id="stock_shop_template.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="stock_shop_template.menu_1" parent="stock_shop_template.menu_root"/>
+    <menuitem name="Menu 2" id="stock_shop_template.menu_2" parent="stock_shop_template.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="stock_shop_template.menu_1_list" parent="stock_shop_template.menu_1"
+              action="stock_shop_template.action_window"/>
+    <menuitem name="Server to list" id="stock_shop_template" parent="stock_shop_template.menu_2"
+              action="stock_shop_template.action_server"/>
+    -->
+  </data>
+</odoo>
