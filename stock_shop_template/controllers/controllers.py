@@ -12,7 +12,7 @@ class StockShopTemplate(http.Controller):
         rest_lst=[]
         if env.user and env.user.main_warehouse_id :
             user = env.user
-            pickings_to_fill = env['stock.picking'].sudo().search([('picking_type_id.default_location_dest_id.location_id', '=', user.main_warehouse_id.lot_stock_id.location_id.id), ('temp_create_pick', '=', True), ('state', '=', 'draft')], order="min_date asc, origin")
+            pickings_to_fill = env['stock.picking'].sudo().search([('picking_type_id.default_location_dest_id.location_id', '=', user.main_warehouse_id.lot_stock_id.location_id.id), ('temp_create_pick', '=', True), ('state', '=', 'draft')], order="scheduled_date asc, origin")
             return http.request.render('stock_shop_template.shop_orders',{'pickings':pickings_to_fill})
         
 

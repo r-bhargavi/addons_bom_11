@@ -6,7 +6,7 @@ import calendar
 import re
 
 import logging
-from openerp import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
 
 _logger = logging.getLogger(__name__)
@@ -21,12 +21,13 @@ class AddMissingProducts(models.Model):
     @api.model
     def _dirty_check(self):
         ids = self._context.get('active_ids')
-        if len(ids) >= 2:
-            invt_ids = self.env['stock.inventory'].browse(ids)
-            for d in invt_ids:
-                if d.location_id.id != invt_ids[0].location_id.id:
-                    raise exceptions.Warning(
-                        _('Not all inventory belongs to same location!'))
+        if ids:
+            if len(ids) >= 2:
+                invt_ids = self.env['stock.inventory'].browse(ids)
+                for d in invt_ids:
+                    if d.location_id.id != invt_ids[0].location_id.id:
+                        raise exceptions.Warning(
+                            _('Not all inventory belongs to same location!'))
         return {}
     
 
@@ -37,9 +38,9 @@ class AddMissingProducts(models.Model):
         active_ids = self._context.get('active_ids')
         res.update({'name':'Add Missing Inventory'})
         return res
-    @api.model
 
-    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,submenu=False):
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
         res = super(AddMissingProducts, self).fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=False)
@@ -54,14 +55,13 @@ class AddMissingProducts(models.Model):
         inv_prod=[]
         active_ids = self._context.get('active_ids')
         inventory_brw=inventory_obj.browse(active_ids)
-        location_id= inventory_brw[0].location_id  
+        location_id= inventory_brw[0].location_id
         for each_invt in inventory_brw:
             if each_invt.product_id:
                 inv_prod.append(each_invt.product_id.id)
             elif each_invt.line_ids:
                 for each_line in each_invt.line_ids:
                     inv_prod.append(each_line.product_id.id)
-
         order_point_ids=orderpoint_obj.search([('location_id','=',location_id.id),('product_id','not in',inv_prod),('active','=',True)])
         if order_point_ids:
             # print "order_point_idsorder_point_ids",order_point_ids
@@ -79,7 +79,7 @@ class AddMissingProducts(models.Model):
             'name':'INVENTORY CREATION MISSING PRODUCTS'+' '+location_id.name,
             'location_id':location_id.id,
             })
-            inventory_id.prepare_inventory()
+            inventory_id.action_start()
             inventory_id.write({'line_ids':order_point_products})
             return {
                 'type': 'ir.actions.act_window',

@@ -1,11 +1,11 @@
-from openerp import models, fields, api,_
+from odoo import models, fields, api,_
 from datetime import date, datetime, timedelta
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import calendar
 import re
 
 import logging
-from openerp import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
 
 _logger = logging.getLogger(__name__)
@@ -59,6 +59,7 @@ class StockPickingTemplate(models.Model):
     #     total_weeks=len(cal.monthdays2calendar(current_year, current_month))
     #     print"total_weekstotal_weekstotal_weekstotal_weeks", total_weeks
     # cron function to create pickings from template
+
     @api.model
     def _cron_generate_provision(self):
         day=''
@@ -144,9 +145,9 @@ class StockPickingTemplate(models.Model):
                             # reset picking company by destination company if picking generate through cron
                             new_picking.company_id = temp_picking.dest_location.company_id.id
                             if temp_picking.week_days == day_names_eng[day_today] :
-                                new_picking.min_date = date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+                                new_picking.scheduled_date = date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                             else :
-                                new_picking.min_date = (date.today() + timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+                                new_picking.scheduled_date = (date.today() + timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                             for move_line in new_picking.move_lines:
                                 move_line.temp_create_move = True
                                 move_line.company_id = temp_picking.dest_location.company_id.id
@@ -157,7 +158,7 @@ class StockPickingTemplate(models.Model):
         picking_ids=self.env['stock.picking'].search([('origin', 'ilike', TEMPLATE_FLAG), ('state', "=", 'draft')])
         if picking_ids:
             for picking in picking_ids:
-                picking_date=datetime.strptime(picking.min_date, "%Y-%m-%d %H:%M:%S")
+                picking_date=datetime.strptime(picking.scheduled_date, "%Y-%m-%d %H:%M:%S")
                 day_no=picking_date.weekday()
                 week_day=calendar.day_name[day_no]
                 template_lines = []

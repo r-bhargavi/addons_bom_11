@@ -1,4 +1,4 @@
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 class StockMove(models.Model) :
 	# _name = 'stock.move'

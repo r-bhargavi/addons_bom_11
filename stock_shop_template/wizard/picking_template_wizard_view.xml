@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
         <record id="assign_picking_temp_wizard_form" model="ir.ui.view">
         <field name="name">picking.temp.wizard.form</field>
@@ -26,14 +26,14 @@
         </record>
 
         <record id="action_assign_picking_temp_wizard_view" model="ir.actions.act_window">
-        <field name="name">Assign Picking Templates</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">picking.template.wizard</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="assign_picking_temp_wizard_form"/>
-        <field name="target">new</field>
-    </record>
+            <field name="name">Assign Picking Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">picking.template.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="assign_picking_temp_wizard_form"/>
+            <field name="target">new</field>
+        </record>
 
 <!--         <record id="view_picking_template_wizard_tree" model="ir.ui.view">
         <field name="name">picking.template.wizard.tree</field>
@@ -59,4 +59,4 @@
         <field name="view_id" ref="view_picking_template_wizard_tree"/>
     </record> -->
     </data>
-</openerp>
+</odoo>

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import SavepointCase
-from openerp.addons.stock_shop_template.tests.test_data import TestData
+from odoo.tests.common import SavepointCase
+from odoo.addons.stock_shop_template.tests.test_data import TestData
 
-from openerp import fields
+from odoo import fields
 import logging
 _logger = logging.getLogger(__name__)
-import openerp
-import openerp.tests
-@openerp.tests.common.at_install(False)
-@openerp.tests.common.post_install(True)
+import odoo
+import odoo.tests
+@odoo.tests.common.at_install(False)
+@odoo.tests.common.post_install(True)
 
 
 class TestCompanyChange(TestData):

@@ -1,6 +1,5 @@
 
-from openerp import models, fields, api,_
-
+from odoo import models, fields, api,_
 
 class ProductProduct(models.Model):
     _inherit='product.product'
@@ -37,10 +36,9 @@ class ProductProduct(models.Model):
             'context': ctx,
         }
 
-    def _check_uom(self, context=None):
-        for product in self.browse(cursor, user, ids, context=context):
-            if product.picking_uom_id and (product.uom_id.category_id.id != product.picking_uom_id.category_id.id) :
-                return False
+    def _check_uom(self):
+        if self.picking_uom_id and (self.uom_id.category_id.id != self.picking_uom_id.category_id.id) :
+            return False
         return True
 
     _constraints = [

@@ -19,7 +19,7 @@ from itertools import groupby
 #         self.value2 = float(self.value) / 100
 
 import logging
-from openerp import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
 
 _logger = logging.getLogger(__name__)
@@ -83,8 +83,9 @@ class StockPicking(models.Model) :
     
     # To set main company on click of  Mark as Todo button
     def action_confirm(self):
+        res = super(StockPicking, self).action_confirm()
         company_changed = False
-        for picking in self.browse(cr, SUPERUSER_ID, ids, context=context):
+        for picking in self:
             mainwh=picking.env.ref('stock.warehouse0', raise_if_not_found=False)
             if picking.temp_create_pick==True and mainwh:
                 if picking.company_id.id != mainwh.company_id.id :
@@ -99,27 +100,24 @@ class StockPicking(models.Model) :
                                                                                      move_line.product_id.uom_id.id)
                     move_line.product_uom = move_line.product_id.uom_id
                 picking.env.ref('stock_shop_template.email_shop_order').send_mail(picking.id)
-
-
-        res=super(StockPicking, self).action_confirm(cr, company_changed and SUPERUSER_ID or uid, ids, context)
         return res
 
 
-    def action_get_last_qties(self, cr, uid, ids, context=None) :
-        for picking in self.browse(cr, SUPERUSER_ID, ids, context=context).filtered(lambda x : x.state =="draft" and x.origin) :
-            last_picking = self.search(cr, SUPERUSER_ID, [('origin', '=', picking.origin), ('state', '=', 'done')], context=context)
-            if last_picking :
-                for move in picking.browse(last_picking[0]).move_lines :
-                    new_move = picking.move_lines.filtered(lambda x : x.product_id.id == move.product_id.id)
-                    if new_move :
-                        new_move.write({'product_uom_qty' : move.product_uom_qty})
+    def action_get_last_qties(self) :
+        for picking in self:
+            if self.state == 'draft' and self.origin:
+                last_picking = self.search([('origin', '=', picking.origin), ('state', '=', 'done')])
+                if last_picking :
+                    for move in last_picking[0].move_lines :
+                        new_move = picking.move_lines.filtered(lambda x : x.product_id.id == move.product_id.id)
+                        if new_move :
+                            new_move.write({'product_uom_qty' : move.product_uom_qty})
         return True
 
 
     # scheduler to merge pickings which belongs to same picking type, source and destination location, with picking type in picking template
     @api.model
     def merge_pickings(self) :
-        # print "merge pickings--------------------"
         pickings,filter_pickings,product_line=[],[],[]
         data_dict,vals={},{}
         array_index=0
@@ -205,10 +203,10 @@ class StockPicking(models.Model) :
             _logger.debug(date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT))
             _logger.debug(base_picking.picking_type_id.name)
             _logger.debug(self.search([('picking_type_id', '=', base_picking.picking_type_id.id), ('state', '=', 'done'), 
-                ('min_date', '>=', date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT) ), ('min_date', '<=', (date.today() + timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT) )]))
+                ('scheduled_date', '>=', date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT) ), ('scheduled_date', '<=', (date.today() + timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT) )]))
             #substract qties sent today
             for picking_done in self.search([('picking_type_id', '=', base_picking.picking_type_id.id), ('state', '=', 'done'), 
-                ('min_date', '>=', date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT) ), ('min_date', '<=', (date.today() + timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT) )]) :
+                ('scheduled_date', '>=', date.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT) ), ('scheduled_date', '<=', (date.today() + timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT) )]) :
                 _logger.debug(picking_done)
                 _logger.debug(data_dict)
                 _logger.debug(data_late)

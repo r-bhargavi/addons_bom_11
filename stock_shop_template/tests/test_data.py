@@ -1,5 +1,5 @@
-import openerp
-from openerp.tests import common
+import odoo
+from odoo.tests import common
 
 class TestData(common.SavepointCase):
 

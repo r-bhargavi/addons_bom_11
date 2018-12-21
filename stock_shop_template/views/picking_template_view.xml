@@ -24,72 +24,73 @@
             key2="client_action_multi"
         />
         
+        
         <record id="picking_temp_form" model="ir.ui.view">
-        <field name="name">picking.temp.form</field>
-        <field name="model">stock.picking.template</field>
-        <field name="arch" type="xml">
-            <form string="Picking Tempplate Form">
-                <header>
-                    <button name="fetch_pickings" string="Fetch Pickings" class="oe_highlight" type="object"/>
-                    </header>
-                <sheet>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name" readonly="1"/>
-                        </h1>
-                    </div>
-                    <group col="4">
-                        <!-- <field name='partner_id'/> -->
-                        <!-- <field name="temp_date"/> -->
-                        <field name="week_days"/>
-                        <field name="src_location" required="1"/>
-                        <field name="picking_type" required="1"/>
-                        <field name="dest_location" required="1"/>
-                        <field name="temp_category"/>
-                        <field name="company_id" invisible="1"/>
-                        <!--<field name="wizard_id" invisible="0"/>-->
-                    </group>
-                    <notebook>
-                        <page string="Template Lines">
-                            <field name="temp_lines">
-                                <tree string="Stock Picking Template Lines" editable="bottom">
-                                    <field name="pick_temp_id" invisible="1"/>
-                                    <field name="product_id"/>
-                                    <field name="suggested_qty"/>
-                                    <field name="product_uom_id"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
-        </field>
+            <field name="name">picking.temp.form</field>
+            <field name="model">stock.picking.template</field>
+            <field name="arch" type="xml">
+                <form string="Picking Tempplate Form">
+                    <header>
+                        <button name="fetch_pickings" string="Fetch Pickings" class="oe_highlight" type="object"/>
+                        </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <!-- <field name='partner_id'/> -->
+                            <!-- <field name="temp_date"/> -->
+                            <field name="week_days"/>
+                            <field name="src_location" required="1"/>
+                            <field name="picking_type" required="1"/>
+                            <field name="dest_location" required="1"/>
+                            <field name="temp_category"/>
+                            <field name="company_id" invisible="1"/>
+                            <!--<field name="wizard_id" invisible="0"/>-->
+                        </group>
+                        <notebook>
+                            <page string="Template Lines">
+                                <field name="temp_lines">
+                                    <tree string="Stock Picking Template Lines" editable="bottom">
+                                        <field name="pick_temp_id" invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="suggested_qty"/>
+                                        <field name="product_uom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
         </record>
 
         <record id="view_picking_template_tree" model="ir.ui.view">
-        <field name="name">picking.template.tree</field>
-        <field name="model">stock.picking.template</field>
-        <field name="priority">4</field>
-        <field name="arch" type="xml">
-            <tree string="Picking Template">
-                <field name="name"/>
-<!--                 <field name="partner_id"/>
- -->            <field name="dest_location"/>
-                <field name="week_days"/>
-                <field name="temp_category"/>
-            </tree>
-        </field>
+            <field name="name">picking.template.tree</field>
+            <field name="model">stock.picking.template</field>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <tree string="Picking Template">
+                    <field name="name"/>
+    <!--                 <field name="partner_id"/>
+     -->            <field name="dest_location"/>
+                    <field name="week_days"/>
+                    <field name="temp_category"/>
+                </tree>
+            </field>
         </record>
 
-    <record id="action_picking_temp_form" model="ir.actions.act_window">
-        <field name="name">Picking Templates</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">stock.picking.template</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[]</field>
-        <field name="context">{}</field>
-    </record>
+        <record id="action_picking_temp_form" model="ir.actions.act_window">
+            <field name="name">Picking Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
 
       <menuitem action="action_picking_temp_form" id="menu_action_picking_temp_form"
               parent="stock.menu_stock_warehouse_mgmt"/>
