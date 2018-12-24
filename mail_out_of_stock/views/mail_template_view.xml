@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--     <record id="template_form_inherit_kt" model="ir.ui.view">
+            <field name="name">template.form.inherit.kt</field>
+            <field name="model">mail.template</field>
+            <field name="inherit_id" ref="mail.email_template_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='model_id']" position="after">
+                        <field name="email_id" widget="many2many_tags"/>
+                    </xpath>
+                </data>
+            </field>
+    </record> -->
+</odoo>

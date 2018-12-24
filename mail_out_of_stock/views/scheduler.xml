@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <!--scheduler to check procurement and send mail to user when product running out of stock-->
+        <record id="automatic_mail_send_prd_outofstock" model="ir.cron">
+            <field name="name">Automatic Send Mail Out Of Stock</field>
+            <field name="interval_number">8</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <!-- <field eval="'stock.move'" name="model"/> -->
+            <field name="model_id" ref="stock.model_stock_move"/>
+            <field name="state">code</field>
+            <field name="code">model.automatic_send_mail_poutstck(res_id=135)</field>
+            <!-- <field eval="'(543881,)'" name="args"/> -->
+        </record>
+
+    </data>
+</odoo>

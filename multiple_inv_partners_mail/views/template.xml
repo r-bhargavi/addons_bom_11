@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="template_detected_multiple_inv_partners_child" model="mail.template">
+        <field name="name">Template To Send Wrongly Configured Partners</field>
+        <field name="subject">Wrongly Configured Partners</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html">
+                <![CDATA[
+<p> Dear team,
+% set partner_detail = object.env.context['details']
+
+
+<p>This mail is to inform that the following list of partners is wrongly configured with multiple invoice partners</p>
+
+    <br/><br/>
+% if partner_detail:
+    <table style="border-collapse:collapse;" width="60%">
+        <tr><th style="border:1px solid black;width:40%;padding:2px;">Partner</th>
+        <th style="border:1px solid black;width:40%;padding:2px;">Invoice Partners</th>
+        </tr>
+        % for i in partner_detail:
+        <tr>
+        <td style="border:1px solid black;width:40%;padding:2px;">${i['parent_name']}</td>
+        <td style="border:1px solid black;width:40%;padding:2px;">${i['child_name']}</td>
+        </tr>
+        %endfor
+    </table>
+% endif
+
+<p>Thank you,</p>
+
+]]></field>
+    </record>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="new_email_template_stock" model="mail.template">
+        <field name="name">Mail Out of Stock - Send by Email</field>
+        <field name="subject">Stock Updates</field>
+        <field name="model_id" ref="stock.model_stock_move"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html">
+                <![CDATA[
+<p> Dear team,
+
+% set moves = object.env.context['get_out_of_stock_products']
+<p>This mail is to inform that following procurements are in waiting stage and products are less than minimum stock</p>
+
+    <br/><br/>
+% if moves:
+    <table style="border-collapse:collapse;" width="60%">
+        <tr><th style="border:1px solid black;width:40%;padding:2px;">Product</th>
+        <th style="border:1px solid black;width:40%;padding:2px;">Location</th>
+        <th style="border:1px solid black;width:20%;text-align:right;padding:2px;">Available Quantity</th>
+        </tr>
+        % for i in moves:
+        <tr>
+        <td style="border:1px solid black;width:40%;padding:2px;">${i['pid']}</td>
+        <td style="border:1px solid black;width:40%;padding:2px;">${i['location_id']}</td>
+        <td style="border:1px solid black;width:20%;text-align:right;padding:2px;">${i['avbl_qty']}</td>
+        </tr>
+        %endfor
+    </table>
+% endif
+
+<p>Thank you,</p>
+
+]]></field>
+    </record>
+</odoo>
