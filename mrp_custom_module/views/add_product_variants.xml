@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_variants_product" model="ir.ui.view">
+            <field name="name">view.variants.product</field>
+            <field name="model">add.product.wizard</field>
+            <field name="arch" type="xml">
+            	<form string="Variants">
+					<group>
+						<group>
+							<field name="product_template" invisible="1"/>
+            				<field name="product_id" domain="[('product_tmpl_id','=',product_template)]" />
+						</group>
+						<group>
+            				<field name="qty"/>
+						</group>
+					</group>
+            		<footer>
+            			<button name="create_mo" string="Submit" type="object" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel" class="oe_highlight"/>
+            		</footer>
+            	</form>
+            </field>
+        </record>
+    </data>
+</odoo>
+
