@@ -1,0 +1,94 @@
+<odoo>
+  <data>
+<record model="ir.ui.view" id="event_order_line">
+             <field name="name">event.sale.order</field>
+             <field name="model">sale.order</field>
+             <field name="inherit_id" ref="sale.view_order_form" />
+             <field name="arch" type="xml">
+
+              <xpath expr="//notebook/page[last()]" position="after">
+                <field name="id" invisible="1"/>
+                   <page string="Waiters">
+                         <field name="service_lines" context="{'default_order_id' : id}">
+                          <tree string="Service" editable="bottom">
+                                    <field name="employee_id" />
+                                    <field name="confirmed" />
+                                    <field name="phone" />
+                                    <field name="email" />
+                                    <field name="comment" />
+                                </tree>
+                         </field>
+                   </page>
+                   <page string="Check-List">
+                         <field name="checklist_lines" context="{'default_order_id_cl' : id}">
+                          <tree string="Checklist" editable="bottom">
+                                    <field name="confirmed" />
+                                    <field name="description" />
+                                    <field name="who" />
+                                    <field name="when" />
+                                </tree>
+                         </field>
+                   </page>
+              </xpath>
+
+            </field>
+</record>
+
+
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="sale_service.list">
+      <field name="name">sale_service list</field>
+      <field name="model">sale_service.sale_service</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="sale_service.action_window">
+      <field name="name">sale_service window</field>
+      <field name="res_model">sale_service.sale_service</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="sale_service.action_server">
+      <field name="name">sale_service server</field>
+      <field name="model_id" ref="model_sale_service_sale_service"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="sale_service" id="sale_service.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="sale_service.menu_1" parent="sale_service.menu_root"/>
+    <menuitem name="Menu 2" id="sale_service.menu_2" parent="sale_service.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="sale_service.menu_1_list" parent="sale_service.menu_1"
+              action="sale_service.action_window"/>
+    <menuitem name="Server to list" id="sale_service" parent="sale_service.menu_2"
+              action="sale_service.action_server"/>
+    -->
+  </data>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_service_sale_service,sale.order.service.line.public,model_sale_order_service_line,,1,1,1,1
+access_sale_checklist,sale.order.checklist.line,model_checklist_line,sales_team.group_sale_salesman,1,1,1,1
