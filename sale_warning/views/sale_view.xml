@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="form_view_sale_order_remind_date">
+            <field name="name">form.view.sale.order.remind_date</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <field name="validity_date" position="before">
+                    <field name="future_date" required="0"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
