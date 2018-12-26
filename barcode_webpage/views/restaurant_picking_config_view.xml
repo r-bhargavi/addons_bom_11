@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="view_config_restaurant_picking_tree" model="ir.ui.view">
+            <field name="name">config.restaurant.tree</field>
+            <field name="model">restaurant.picking.config</field>
+            <field name="arch" type="xml">
+                <tree string="Restaurant Picking Configuration">
+                    <field name="name"/>
+                    <field name="picking_type_id" options="{'no_create': True}"/>
+                    <field name="source_location_id" options="{'no_create': True}"/>
+                    <field name="destination_location_id" options="{'no_create': True}"/>
+                    <field name="barcode_nomenclature_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_config_restaurant_picking_form" model="ir.ui.view">
+            <field name="name">config.restaurant.form</field>
+            <field name="model">restaurant.picking.config</field>
+            <field name="arch" type="xml">
+                <form string="Restaurant Picking Configuration">
+                    <sheet>
+                    <group>
+                        <group colspan="4">
+                            <field name="name"/>
+                            <field name="picking_type_id" options="{'no_create': True}"/>
+                            <field name="source_location_id" options="{'no_create': True}"/>
+                            <field name="destination_location_id" options="{'no_create': True}"/>
+                            <field name="barcode_nomenclature_id"/>
+                        </group>
+                    </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_config_restaurant_picking_view" model="ir.actions.act_window">
+            <field name="name">Restaurant Picking Configuration</field>
+            <field name="res_model">restaurant.picking.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_config_restaurant_picking_tree"/>
+        </record>
+        <menuitem action="action_config_restaurant_picking_view" id="menu_restaurant_picking_config"
+                  parent="stock.menu_stock_config_settings" sequence="60"/>
+    </data>
+</openerp>
