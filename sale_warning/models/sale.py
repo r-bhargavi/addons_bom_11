@@ -48,9 +48,8 @@ class SaleOrder(models.Model):
     @api.model
     def cron_send_email_data_week(self):
         current_date=date.today()
-        sale_id= self.search([('team_id', '!=', 2), ('state', 'in',( 'sent')),('partner_id.email', '!=', False), '|', ('future_date','<=',current_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)), ('future_date','=',False),
+        sale_id= self.search([('team_id', '!=', 2), ('state', '=','sent'),('partner_id.email', '!=', False), '|', ('future_date','<=',current_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)), ('future_date','=',False),
             ('requested_date','>',(current_date + relativedelta(days=+6)).strftime(DEFAULT_SERVER_DATETIME_FORMAT))])
-        _logger.debug(sale_id)
         if sale_id:
             #TODO : create template with external id
             template_id = 95
@@ -70,7 +69,7 @@ class SaleOrder(models.Model):
     @api.model
     def cron_send_email_data_everyday(self):
         current_date=date.today()
-        sale_id= self.search([('team_id', '!=', 2), ('state', 'in',('sent')),('partner_id.email', '!=', False), '|', ('future_date','<=',current_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)), ('future_date','=',False),
+        sale_id= self.search([('team_id', '!=', 2), ('state', '=','sent'),('partner_id.email', '!=', False), '|', ('future_date','<=',current_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)), ('future_date','=',False),
             ('requested_date','<=',(current_date + relativedelta(days=+6)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)), ('requested_date','>',current_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT))])
         if sale_id:
             template_id = 96
