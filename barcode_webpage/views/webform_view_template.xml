@@ -1,0 +1,119 @@
+<openerp>
+    <data>
+    	<!-- <template id="barcode_webpage.layout" name="layout">
+    		<t t-call="web.layout">
+                <t t-set="head">
+                  <link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>
+                  <link rel="stylesheet" href="/web/static/lib/fontawesome/css/font-awesome.css"/>
+                  <script src="/web/static/lib/jquery/jquery.js" type="text/javascript"/>
+                </t>
+                <t t-set="body_classname" t-value="'container'"/>
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-3 o_database_list">
+                    <div class="text-center">
+                      <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}"/>
+                    </div>
+                    <t t-raw="0"/>
+                    <div class="text-center" t-if="not disable_footer">
+                    </div>
+
+                  </div>
+                </div>
+            </t>
+        </template>
+
+		<template id="restaurant_home" name="WebForm">
+			<t t-call="barcode_webpage.layout">
+				<form class="info create" action="/scan" method="POST">
+					<div class="well">
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-md-offset-3">
+								<div class="form-group text-center">
+									<label class="control-label col-sm-2 col-md-4">Restaurant<span style="color:#FF0000">*</span></label>
+									<div class="col-sm-12 col-md-12">
+										<select id="select_restaurant" class="form-control select2" name="restaurant" required="true">
+											<t t-foreach="restaurant" t-as="rest">
+												<option t-att-value="rest.id"><span t-esc="rest.name"/></option>
+											</t>
+										</select>
+									<span class="help-block"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+
+							<div class="col-sm-12 col-md-6 col-md-offset-3">
+								<div class="form-group text-center">
+									<label for="product_barcode" class="control-label col-sm-1 col-md-4">Barcode
+									</label>
+								
+									<div class="col-sm-12 col-md-12">
+										<input type="text" name="product_barcode" autofocus="autofocus" id="product_barcode"  class="form-control"/>
+										<br/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row text-center">
+							<input  class="btn btn-default btn-primary" name="submit" id="submit_barcode" type="submit" value="Submit"/>
+						</div>
+						<br/>
+						<div class="row" t-if="lastProduct">
+
+							<div class="col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-3">
+								<div class="form-group text-center">
+									<label class="control-label col-sm-12 col-md-12">Last Scanned Product
+									</label>
+								
+									<div class="col-sm-12 col-md-12">
+										<p class="alert alert-success" t-if="lastProduct">
+					                        <t t-esc="lastProduct"/>
+					                    </p>
+										<br/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<p class="alert alert-danger" t-if="error">
+	                        <t t-esc="error"/>
+	                        <audio src="/barcode_webpage/static/src/sounds/error.wav" autoplay="true"></audio>
+	                    </p>
+	                    <p class="alert alert-success" t-if="message">
+	                        <t t-esc="message"/>
+	                        <audio src="/barcode_webpage/static/src/sounds/bell.wav" autoplay="true"></audio>
+	                    </p>
+					</div>
+
+				</form>
+			</t>
+		</template> -->
+
+
+	<template id="no_access_restaurant_url" name="WebForm">
+	<html>
+		<head>
+			<title><t t-esc="restaurant"/></title>
+		</head>
+		</html>
+	<form class="info create" action="/scan" method="POST">
+		<table class="table table-bordered">
+			<tr>
+				<td>
+					<div class="row">
+						<div class="col-xs-6 col-md-10">
+							<font size="6">You are not allowed to access restaurant product scan  </font>
+							<audio src="/barcode_webpage/static/src/sounds/error.wav" autoplay="true"></audio>
+
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+	</template>
+
+    </data>
+</openerp>
