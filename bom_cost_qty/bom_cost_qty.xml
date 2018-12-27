@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record model='ir.ui.view' id='mrp_bom_cost_qty_form'>
+            <field name="name">wizard.mrp_bom_cost.form</field>
+            <field name="model">bom_cost_qty.wizard.mrp_bom_cost</field>
+            <field name="arch" type="xml">
+                <form string="Wizard">
+                    <sheet>
+                    <group col="4">
+                        <field name="edit_qty_src" required="1"/>
+                        <field name="qty" attrs="{'invisible':[('edit_qty_src','!=','fg_editl')],'readonly':[('qty_edited','=',True)]}"/>
+                        <field name="message" attrs="{'invisible':[('message','=',False)]}"/>
+                        <field name="qty_edited" invisible="1"/>
+                        <field name="bom" invisible="True"/>
+                    </group>
+                    <field name="component_ids" attrs="{'invisible':[('edit_qty_src','=','fg_editl')],'readonly':[('qty_edited','=',True)]}">
+                    <tree string="Component Lines" editable="bottom" create="false" delete="false">
+                        <field name="product_id"/>
+                        <field name="orig_product_qty" readonly="1"/>
+                        <field name="edited_product_qty"/>
+                        <field name="product_uom"/>
+                        <field name="mrp_cost_id" invisible="1"/>
+                        <field name="one_comp_qty_edited" invisible="1"/>
+                    </tree>
+                    </field>
+                    </sheet>
+                    <footer>
+                        <button name="print_report" type="object" default_focus="1"
+                                string="Print report" class="oe_highlight"
+                                 icon="gtk-print"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+         <record id="action_view_mrp_bom_cost" model="ir.actions.act_window">
+            <field name="name">Choose quantity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bom_cost_qty.wizard.mrp_bom_cost</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mrp_bom_cost_qty_form"/>
+            <field name="context">{'readonly_by_pass': True}</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="mrp_bom_form_view_wizard" model="ir.ui.view">
+            <field name="name">mrp.bom.form.wizard</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <sheet position="before">
+                    <header>
+                        <button name="%(action_view_mrp_bom_cost)d" string="Print Bom Cost Report" type="action" attrs=""/>
+                    </header>
+                </sheet>
+            </field>
+        </record>
+    </data>
+</odoo>

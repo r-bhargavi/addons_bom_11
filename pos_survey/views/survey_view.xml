@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <record id="survey_quotation_inherit_form" model="ir.ui.view">
+            <field name="name">survey.question.inherit.form</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='type']" position="after">
+                        <field name="journal_ids" widget="many2many_tags" />
+                    </xpath>
+                </data>
+            </field>
+    </record>
+    <record id="survey_user_input_form_inherit" model="ir.ui.view">
+            <field name="name">survey_user_input_form_inherit</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//button[@name='action_survey_results']" position="after">
+                        <button string="Close Session" type="object" name="action_close_session" attrs="{'invisible' : [('state', 'in', ('done'))]}" class="oe_highlight"/>
+                    </xpath>
+                    <xpath expr="//field[@name='type']" position="after">
+                        <field name="session_id" />
+                    </xpath>
+                </data>
+            </field>
+    </record>
+
+    <record id="pos_session_inherit_form" model="ir.ui.view">
+            <field name="name">pos.session.inherit.form</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='statement_ids']/tree" position="inside">
+                        <field name="survey_input_line_id" />
+                    </xpath>
+                    <xpath expr="//button[@name='open_frontend_cb']" position="after">
+                        <button string="Start/Continue Survey" type="object" name="action_survey_user_input" attrs="{'invisible' : ['|', ('survey_id', '=', False), ('state', 'not in', ('opened','closing_control'))]}" class="oe_highlight"/>
+                        <field name="survey_id" invisible="1"/>
+                    </xpath>
+                    <!-- <xpath expr="//button[@name='close']" position="attributes">
+                        <attribute name="attrs">{'invisible' : ['|', '|', ('cash_control', '=', True),('state', '!=', 'opened'), ('survey_id', '!=', False)]}</attribute>
+                    </xpath> -->
+                </data>
+            </field>
+    </record>
+
+    <record id="pos_config_inherit_form" model="ir.ui.view">
+            <field name="name">pos.config.inherit.form</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@id='order_reference']" position="after">
+                        
+                        <div id="" class="col-xs-12 col-md-6 o_setting_box" groups="base.group_no_one">
+                            <div class="o_setting_right_pane">
+                                <label string="Rapport de trésorerie"/>
+                                <div class="text-muted">
+                                </div>
+                                <div class="content-group mt16">
+                                    <field name="survey_id"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </xpath>
+                </data>
+            </field>
+    </record>
+</odoo>

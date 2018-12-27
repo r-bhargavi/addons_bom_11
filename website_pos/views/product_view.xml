@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_normal_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.normal.form.view.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='available_in_pos']" position="after">
+                    <field name="unavailable_in_pos"/>
+                </xpath>
+                <xpath expr="//field[@name='public_categ_ids']" position="before">
+                    <field name="exclude_from_website"/>
+                </xpath>
+            </field>
+        </record>
+         <record id="product_variant_easy_edit_view_inherit" model="ir.ui.view">
+            <field name="name">product.variant.easy.edit.view.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='pricing']" position="after">
+                    <group string="Availability in Point of Sale" name="availablilty_in_pos">
+                        <field name="unavailable_in_pos"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
