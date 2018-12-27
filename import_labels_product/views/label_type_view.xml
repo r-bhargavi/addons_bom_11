@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_label_type_tree" model="ir.ui.view">
+            <field name="name">label.type.tree</field>
+            <field name="model">label.type</field>
+            <field name="arch" type="xml">
+                <tree string="Label Type Tree">
+                    <field name="name"/>
+                    <field name="max_length"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="label_type_view" model="ir.ui.view">
+            <field name="name">Label Type Data</field>
+            <field name="model">label.type</field>
+            <field name="arch" type="xml">
+                <form string="Label Type Data">
+                    <group col="2">
+                    <field name="name" />
+                    <field name="max_length" />
+                    <field name="picture" widget="image"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="label_type_action" model="ir.actions.act_window">
+             <field name="name">Label Type Data</field>
+             <field name="res_model">label.type</field>
+            <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="view_label_type_tree"/>
+             <field name="target">current</field>
+        </record>
+
+        <menuitem action="label_type_action" id="menu_label_type_action"
+                  parent="main_menu_import_data"/>
+
+
+    </data>
+</odoo>

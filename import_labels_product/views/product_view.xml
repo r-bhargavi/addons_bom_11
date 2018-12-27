@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="product_normal_form_view_label_inherit" model="ir.ui.view">
+        <field name="name">product.normal.form.label.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="label_type"/>
+                    <field name="picture" widget="image"/>
+                    <field name="poids_net"/>
+                    <field name="kcal"/>
+                    <field name="kj"/>
+                    <field name="lip"/>
+                    <field name="ags"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name='uom_id']" position="after">
+                    <field name="glu"/>
+                    <field name="sucre"/>
+                    <field name="prot"/>
+                    <field name="sel"/>
+                    <field name="dlc"/>
+                    <field name="t_degree"/>
+                    <field name="per_ml"/>
+            
+            </xpath>
+        </field>
+        </record>
+
+    </data>
+</odoo>

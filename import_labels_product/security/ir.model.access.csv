@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_picking_template_employee,access.stock.picking.template.employee,stock_shop_template.model_stock_picking_template,base.group_user,1,0,0,0
+access_stock_picking_template_line_employee,access.stock.picking.template.line.employee,stock_shop_template.model_stock_picking_template_line,base.group_user,1,0,0,0
+access_picking_template_wizard_employee,access.picking.template.wizard.employee,stock_shop_template.model_picking_template_wizard,base.group_user,1,0,0,0
+access_stock_picking_template_inv_mgr,access.stock.picking.template.inv.mgr,stock_shop_template.model_stock_picking_template,stock.group_stock_manager,1,1,1,1
+access_stock_picking_template_line_inv_mgr,access.stock.picking.template.line.inv.mgr,stock_shop_template.model_stock_picking_template_line,stock.group_stock_manager,1,1,1,1
+access_picking_template_wizard_inv_mgr,access.picking.template.wizard.inv.mgr,stock_shop_template.model_picking_template_wizard,stock.group_stock_manager,1,1,1,1
