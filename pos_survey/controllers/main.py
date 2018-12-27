@@ -16,7 +16,7 @@ from odoo.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT as DTF, ustr
 
 _logger = logging.getLogger(__name__)
 
-import odoo.addons.survey.controllers.main
+import openerp.addons.survey.controllers.main
 
 
 class WebsiteSurvey(openerp.addons.survey.controllers.main.WebsiteSurvey):
@@ -24,7 +24,6 @@ class WebsiteSurvey(openerp.addons.survey.controllers.main.WebsiteSurvey):
     @http.route(['/survey/submit/<model("survey.survey"):survey>'],
                 type='http', methods=['POST'], auth='public', website=True)
     def submit(self, survey, **post):
-        print ("\n\n call---------------")
         _logger.debug("in overloaded controller")
         res = super(WebsiteSurvey, self).submit(survey,**post)
         user_input_id = self.env['survey.user_input_line'].search([('token', '=', post['token'])])

@@ -42,13 +42,12 @@
                         <button string="Start/Continue Survey" type="object" name="action_survey_user_input" attrs="{'invisible' : ['|', ('survey_id', '=', False), ('state', 'not in', ('opened','closing_control'))]}" class="oe_highlight"/>
                         <field name="survey_id" invisible="1"/>
                     </xpath>
-                    <!-- <xpath expr="//button[@name='close']" position="attributes">
-                        <attribute name="attrs">{'invisible' : ['|', '|', ('cash_control', '=', True),('state', '!=', 'opened'), ('survey_id', '!=', False)]}</attribute>
-                    </xpath> -->
+                    <!--<xpath expr="//button[@name='close']" position="attributes">-->
+                        <!--<attribute name="attrs">{'invisible' : ['|', '|', ('cash_control', '=', True),('state', '!=', 'opened'), ('survey_id', '!=', False)]}</attribute>-->
+                    <!--</xpath>-->
                 </data>
             </field>
     </record>
-
     <record id="pos_config_inherit_form" model="ir.ui.view">
             <field name="name">pos.config.inherit.form</field>
             <field name="model">pos.config</field>
@@ -56,8 +55,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//div[@id='order_reference']" position="after">
-                        
-                        <div id="" class="col-xs-12 col-md-6 o_setting_box" groups="base.group_no_one">
+                        <div id="order_reference" class="col-xs-12 col-md-6 o_setting_box" groups="base.group_no_one">
                             <div class="o_setting_right_pane">
                                 <label string="Rapport de trésorerie"/>
                                 <div class="text-muted">
@@ -67,7 +65,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </xpath>
                 </data>
             </field>
