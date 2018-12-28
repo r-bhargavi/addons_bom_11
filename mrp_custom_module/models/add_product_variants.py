@@ -17,7 +17,7 @@ class AddProduct(models.TransientModel):
         produce_obj=self.env['mrp.product.produce']
         if self.product_id:
             bom_obj = self.env['mrp.bom'].search([('product_tmpl_id','=',self.product_template.id), '|', ('product_id' ,'=', False), ('product_id', '=', self.product_id.id)],limit=1)
-    
+            
                 # to create mo if bom exists for product template of select product variant
             if bom_obj:
                 vals={'product_id':self.product_id.id,'product_qty':self.qty,'bom_id':bom_obj.id,'product_uom_id':self.product_id.uom_id.id}

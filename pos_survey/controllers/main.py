@@ -24,6 +24,7 @@ class WebsiteSurvey(openerp.addons.survey.controllers.main.WebsiteSurvey):
     @http.route(['/survey/submit/<model("survey.survey"):survey>'],
                 type='http', methods=['POST'], auth='public', website=True)
     def submit(self, survey, **post):
+        print ("\n\n controller call----------->")
         _logger.debug("in overloaded controller")
         res = super(WebsiteSurvey, self).submit(survey,**post)
         user_input_id = self.env['survey.user_input_line'].search([('token', '=', post['token'])])

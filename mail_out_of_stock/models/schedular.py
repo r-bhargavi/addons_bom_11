@@ -36,6 +36,7 @@ class StockMove(models.Model):
         history=self.env['stock.out.history']
         # move_ids=move_obj.with_context(lang="fr_BE").search([('product_id.active','=',True),('procurement_id','!=',False),('procurement_id.orderpoint_id','!=',False), ('procurement_id.orderpoint_id.active','=',True),('procurement_id.state','in',('running','confirmed','cancel')), ('picking_type_id.code', '=', 'internal')])
         move_ids=move_obj.with_context(lang="fr_BE").search([('picking_type_id.code', '=', 'internal'),('group_id','!=',False),('product_id.active','=',True),('state','in',['confirmed','cancel'])])
+
         final_list=[]
         if move_ids:
             vals={}

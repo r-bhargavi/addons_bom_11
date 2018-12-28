@@ -21,6 +21,7 @@ class survey_question(models.Model) :
     journal_ids =fields.One2many('account.journal', 'question_id', string="Journals")
 
 
+
 class survey_question(models.Model) :
     _inherit = 'account.journal'
 
@@ -51,13 +52,12 @@ class survey_user_input(models.Model) :
     def action_close_session(self):
         if self.session_id and self.user_input_line_ids and self.session_id.statement_ids:
             for line in self.user_input_line_ids:
+                # print ("\n\n statemnt--------_>",self.session_id.statement_ids,line.question_id.journal_id)
                 # self.session_id.statement_ids.filtered(lambda statement_line: statement_line.journal_id.id==line.question_id.journal_ids[0].id).write({'survey_input_line_id':line.id})
-                #new code for above line
                 for each in self.session_id.statement_ids:
                     for each_que in line.question_id.journal_ids:
                         if each.journal_id.id == each_que.id:
                             each.write({'survey_input_line_id':line.id})
-    
     # close pos session and post or validate order
     #         self.session_id.wkf_action_closing_control()
     #         self.session_id.wkf_action_close()
@@ -104,8 +104,8 @@ class pos_session(models.Model) :
             user_input = self.env['survey.user_input'].browse(1)
             if not user_input :
                 user_input = self.env['survey.user_input'].create({'survey_id':survey.id, 'session_id' : self.id})
-            questions_to_fill = self.env['survey.question'].search([('survey_id', '=', survey.id),('journal_ids', '!=', False)])
-            # questions_to_fill = self.env['survey.question'].browse(1)
+            # questions_to_fill = self.env['survey.question'].search([('survey_id', '=', survey.id),('journal_ids', '!=', False)])
+            questions_to_fill = self.env['survey.question'].browse(1)
             for question in questions_to_fill :
                 for journal in question.journal_ids :
                     if journal.id in self.statement_ids.mapped('journal_id').mapped('id') :
@@ -146,3 +146,5 @@ class pos_config(models.Model) :
     _inherit = 'pos.config'
 
     survey_id=fields.Many2one('survey.survey', string='Rapport de trésorerie')
+
+
